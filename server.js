@@ -20,7 +20,7 @@ io.on("connection", (socket)=>{
         //socket.broadcast will emit to everyone but the user the sent the message.
         //if we wanted to emit to everyone, including the user that sent the message we would use io.broadcast
         //Again we pass the emit method two argument s the first is the type and the second is the data that we received.
-        socket.broadcast.emit("message", data);
+        io.emit("message", data);
     });
 
     //.emit takes two arguments. The first is the name which can be anything we want.

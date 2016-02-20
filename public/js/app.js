@@ -9,7 +9,10 @@ socket.on("connect", ()=>{
 
 //Listen to the emit. First argument is the emit name, second argument is the callback with our data.
 socket.on("message", (data)=>{
-    console.log(data);
+    //We will append the incoming messages
+    $(".messages").append(
+        `<h4>${data.text}</h4>`
+    )
 });
 
 //In this section we will handle submission of new messages
