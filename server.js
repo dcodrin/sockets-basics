@@ -10,7 +10,7 @@ var io = require("socket.io")(http);
 app.use(express.static(__dirname + "/public"));
 
 //Tell the server to wait for a connection and when a connection is detected print to the console.
-io.on("connection", function(){
+io.on("connection", ()=>{
     console.log("User connected via socket.io");
 });
 
