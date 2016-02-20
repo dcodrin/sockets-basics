@@ -1,5 +1,6 @@
 var PORT = process.env.PORT || 3000;
 var express = require("express");
+var moment = require("moment");
 var app = express();
 //This tells Node to start a new server and to use the express app as a boilerplate.
 var http = require("http").Server(app);
@@ -16,16 +17,18 @@ io.on("connection", (socket)=>{
 
     //Listen on the message event
     socket.on("message", (data)=>{
-        console.log(data);
-        //socket.broadcast will emit to everyone but the user the sent the message.
-        //if we wanted to emit to everyone, including the user that sent the message we would use io.broadcast
+
+        //socket.broadcast.emit will emit to everyone but the browser that sent the message.
+        //if we wanted to emit to everyone, including the browser that sent the message we would use io.emit
         //Again we pass the emit method two argument s the first is the type and the second is the data that we received.
+        //Note .valueOf() returns the JavaScript unix timestamp in ms
+        data.time = moment().valueOf();
         io.emit("message", data);
     });
 
     //.emit takes two arguments. The first is the name which can be anything we want.
     //The second argument is data to send. It is recommended to use an object.
-    socket.emit("message", {
+    socket.emit("welcome", {
        text: "Welcome to this most awesome chat application"
     });
 });
