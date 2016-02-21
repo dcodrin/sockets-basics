@@ -20,9 +20,10 @@ function getQueries(queryString) {
 //This will log on the browser console
 socket.on("connect", ()=> {
     console.log("Connected to socket.io server");
+    var greeting = room ? `Welcome to the ${room} room` : `Welcome to the internetz!`;
     $(".welcome").append(
         `
-        <h1>Welcome to this most awesome chat app!</h1>
+        <h1>${greeting}</h1>
         `
     );
 });
