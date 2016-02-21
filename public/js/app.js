@@ -10,8 +10,9 @@ function getQueries(queryString) {
     //We then build our object
     var params =  query.reduce((acc, next)=>{
         var split = next.split("=");
-        //Ensure that we decode spaces and special characters.
-        acc[decodeURIComponent(split[0])] = decodeURIComponent(split[1])
+        //Ensure that we decode spaces and special characters. Note that we replace the "+" with a space using regex, this is done because when we submit a form it treats spaces as plus signs in input fields.
+        //Also note that we first run the replace method and only then do we decode the data. This is done so as to allow actual "+" signs imputed by the user to through.
+        acc[decodeURIComponent(split[0])] = decodeURIComponent(split[1].replace(/\+/g," "));
         return acc;
     }, {});
     return params;
@@ -20,6 +21,10 @@ function getQueries(queryString) {
 //This will log on the browser console
 socket.on("connect", ()=> {
     console.log("Connected to socket.io server");
+    socket.emit("joinRoom", {
+        name: name,
+        room: room
+    });
     var greeting = room ? `Welcome to the ${room} room` : `Welcome to the internetz!`;
     $(".welcome").append(
         `
