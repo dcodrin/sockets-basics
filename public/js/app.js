@@ -1,5 +1,21 @@
 //Our front end JavaScript
+var name = getQueries(window.location.search).name;
+var room = getQueries(window.location.search).room;
 var socket = io();
+
+//Get queries formatted as object. The query string will come from window.location.search
+function getQueries(queryString) {
+    //First we remove the "?" then we split the string by "$"
+    var query = queryString.substring(1).split('&');
+    //We then build our object
+    var params =  query.reduce((acc, next)=>{
+        var split = next.split("=");
+        //Ensure that we decode spaces and special characters.
+        acc[decodeURIComponent(split[0])] = decodeURIComponent(split[1])
+        return acc;
+    }, {});
+    return params;
+}
 
 //This will log on the browser console
 socket.on("connect", ()=> {
@@ -15,18 +31,19 @@ socket.on("connect", ()=> {
 //Listen to the emit. First argument is the emit name, second argument is the callback with our data.
 socket.on("message", (data)=> {
     //We will append the incoming messages
-
-    //The servers sends us the unix time. We
+    //The servers sends us the unix time. We then convert it to the local time.
     var timeStamp = moment.utc(data.time);
     timeStamp = timeStamp.local().format("Do MMM YYYY, h:mm a");
 
     $(".messages").append(
         `
-        <div><h4>${data.text}<strong style="font-size: 0.7em;font-weight: 300; color: tomato"> Posted on: ${timeStamp ? timeStamp : ""}</strong></h4></div>
+        <div class="message"><h3>${data.text}</h3>
+            <p class="poster">Posted by: ${data.name ? data.name : "Anonymous"}</p>
+            <strong class="timeStamp"> Posted on: ${timeStamp ? timeStamp : ""}</strong>
+        </div>
         `
     )
 });
-
 
 //In this section we will handle submission of new messages
 
@@ -43,11 +60,10 @@ $form.on("submit", (event)=> {
     socket.emit("message", {
         //Use the .find() to find an input field by attributes
         //Notice how we are selecting the input field that has an attribute name that is set to message. We then use the val() method to extract the value of that input field.
-        text: $message.val()
+        text: $message.val(),
+        name: name
     });
 
     //Clear the input field after sending the message.
     $message.val("");
-
-
 });
