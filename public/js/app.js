@@ -31,6 +31,11 @@ socket.on("connect", ()=> {
         <h1>${greeting}</h1>
         `
     );
+    $(".roomUsers").append(
+        `
+
+        `
+    )
 });
 
 
