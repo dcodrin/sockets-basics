@@ -10,10 +10,24 @@ var io = require("socket.io")(http);
 //We are exposing a folder
 app.use(express.static(__dirname + "/public"));
 
+var clientInfo = {};
+
 //Tell the server to wait for a connection and when a connection is detected print to the console.
 io.on("connection", (socket)=>{
 //The socket in the callback is an individual connection.
     console.log("User connected via socket.io");
+
+    socket.on("joinRoom", (req)=>{
+        //Socket.id is a unique identifier that is created by socket. For every user we create a unique identifier and then set that equal to the user info that was passed in.
+        clientInfo[socket.id] = req;
+        //This is a built in socket feature. It allows to join specific rooms.
+        socket.join(req.room);
+        socket.broadcast.to(req.room).emit("message", {
+            name: "SKYNET",
+            text: `${req.name} has joined the chat!`,
+            timestamp: moment().valueOf()
+        });
+    });
 
     //Listen on the message event
     socket.on("message", (data)=>{
@@ -23,7 +37,8 @@ io.on("connection", (socket)=>{
         //Again we pass the emit method two argument s the first is the type and the second is the data that we received.
         //Note .valueOf() returns the JavaScript unix timestamp in ms
         data.time = moment().valueOf();
-        io.emit("message", data);
+        //We only emit message to users in the same room
+        io.to(clientInfo[socket.id].room).emit("message", data);
     });
 
     //.emit takes two arguments. The first is the name which can be anything we want.
