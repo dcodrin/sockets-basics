@@ -8,9 +8,12 @@ var http = require("http").Server(app);
 var io = require("socket.io")(http);
 
 //We are exposing a folder
+
 app.use(express.static(__dirname + "/public"));
 
 var clientInfo = {};
+
+
 
 function sendCurrentUsers(socket){
     //We get the info based on the socket id.
@@ -39,7 +42,6 @@ function sendCurrentUsers(socket){
 io.on("connection", (socket)=> {
 //The socket in the callback is an individual connection.
     console.log("User connected via socket.io");
-
     //We will listen for disconnects. Note the word is a socket specific word.
     socket.on("disconnect", ()=> {
         if (clientInfo[socket.id]) {
@@ -80,8 +82,6 @@ io.on("connection", (socket)=> {
             //We only emit message to users in the same room
             io.to(clientInfo[socket.id].room).emit("message", data);
         }
-
-
     });
 
     //.emit takes two arguments. The first is the name which can be anything we want.

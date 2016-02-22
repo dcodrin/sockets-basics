@@ -3,21 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Sockets Basics</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/main.css">
 
 </head>
 <body>
 
-    <h1>Join a chat, if you dare!</h1>
-    <form action="/chat.html">
+<div class="container">
+    <div class="row vertical-align">
+        <div class="col-sm-6 col-sm-offset-3 well">
+            <h1>Join a room!</h1>
+            <form action="/chat.html" class="form-group">
 
-        <label for="text">Display Name</label>
-        <input type="text" name="name" id="text">
+                <label for="text">Display Name</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </span>
+                    <input type="text" name="name" id="text" class="form-control" placeholder="Enter a display name">
+                </div>
 
-        <label for="room">Room</label>
-        <input type="text" name="room" id="room" placeholder="Enter room name to join">
-
-        <input type="submit" value="Join chat">
-    </form>
+                <label for="room">Room</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </span>
+                    <input type="text" name="room" id="room" class="form-control"
+                           placeholder="Enter room name to join ( or create)">
+                </div>
+                <br>
+                <input type="submit" value="Join chat" class="btn btn-info btn-block">
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

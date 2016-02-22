@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Sockets Basics</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/main.css">
 
 </head>
 <body>
-<div class="welcome">
-    <!-- Welcome will be placed here -->
-</div>
-<div>
-    <a href="/index.html">Change Details</a>
-</div>
-<div class="messages">
-    <!-- Messages will be placed here -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="welcome well well-sm">
+                <!-- Welcome will be placed here -->
+            </div>
+            <div>
+                <a href="/index.html" class="well well-sm">Change Details</a>
+            </div>
+            <br>
+            <div class="messages">
+                <!-- Messages will be placed here -->
 
+            </div>
+            <div class="roomUsers">
+                <!--Users will be displayed here-->
+            </div>
+            <form id="message-form">
+                <textarea name="message" class="form-control" placeholder="Message..."></textarea>
+                <br>
+                <input type="submit" class="btn btn-primary btn-block">
+            </form>
+        </div>
+    </div>
 </div>
-<div class="roomUsers">
-    <!--Users will be displayed here-->
-</div>
-<form id="message-form">
-    <input type="text" name="message" placeholder="Message...">
-    <input type="submit">
-</form>
 
 <script src="js/jquery-2.2.0.min.js"></script>
 <script src="js/moment.js"></script>

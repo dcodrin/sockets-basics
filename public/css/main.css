@@ -1,23 +1,23 @@
-* {
-    margin: 0;
-    padding: 0;
+html, body {
+    height: 100vh;
 }
 
-.message h3 {
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px 0 10px 0;
+body {
+    background: url("../chat.jpg");
+    background-size: cover;
 }
 
-.poster {
-    margin: 5px 10px 0 10px;
-    color: deepskyblue;
-    font-size: 0.9em;
-}
-
-.timeStamp {
-    margin: 5px 10px;
+.poster strong {
     color: tomato;
-    font-size: 0.7em;
+}
+
+.vertical-align {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.welcome {
+    margin-top: 2em;
 }

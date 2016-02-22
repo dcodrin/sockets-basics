@@ -18,6 +18,7 @@ function getQueries(queryString) {
     return params;
 }
 
+
 //This will log on the browser console
 socket.on("connect", ()=> {
     console.log("Connected to socket.io server");
@@ -26,16 +27,12 @@ socket.on("connect", ()=> {
         room: room
     });
     var greeting = room ? `Welcome to the ${room} room` : `Welcome to the internetz!`;
+    $(".welcome > h2").remove();
     $(".welcome").append(
         `
-        <h1>${greeting}</h1>
+        <h2>${greeting}</h2>
         `
     );
-    $(".roomUsers").append(
-        `
-
-        `
-    )
 });
 
 
@@ -48,9 +45,9 @@ socket.on("message", (data)=> {
 
     $(".messages").append(
         `
-        <div class="message"><h3>${data.text}</h3>
-            <p class="poster">Posted by: ${data.name ? data.name : "Anonymous"}</p>
-            <strong class="timeStamp"> Posted on: ${timeStamp ? timeStamp : ""}</strong>
+        <div class="well well-sm"><p>${data.text}</p>
+            <h5 class="poster">Posted by <strong class="poster">${data.name ? data.name : "Anonymous"}</strong> on ${timeStamp ? timeStamp : ""}</h5>
+
         </div>
         `
     )
@@ -66,7 +63,7 @@ $form.on("submit", (event)=> {
     event.preventDefault();
 
     //If an element is to be used more that once, store it in a variable to avoid traversing the dome multiple times.
-    var $message = $form.find("input[name=message]");
+    var $message = $form.find("textarea[name=message]");
 
     socket.emit("message", {
         //Use the .find() to find an input field by attributes
