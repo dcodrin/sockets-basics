@@ -39,7 +39,7 @@ function sendCurrentUsers(socket){
 }
 
 //Tell the server to wait for a connection and when a connection is detected print to the console. Note the word connection is a built in socket word
-io.on("connection", (socket)=> {
+io.on("connect", (socket)=> {
 //The socket in the callback is an individual connection.
     console.log("User connected via socket.io");
     //We will listen for disconnects. Note the word is a socket specific word.
